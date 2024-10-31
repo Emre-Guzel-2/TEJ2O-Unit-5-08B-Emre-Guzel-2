@@ -6,7 +6,6 @@
 */
 // Setting the varibels 
 let distacneToObject: number = 0
-
 // Setting the screen
 basic.clearScreen()
 basic.showIcon(IconNames.Happy)
@@ -15,17 +14,32 @@ basic.showIcon(IconNames.Happy)
 input.onButtonPressed(Button.A,function(){
 basic.clearScreen()
 
-// Setting the sonar
-distacneToObject = sonar.ping(
+while (1==1){
+    // Setting the motors 
+   distacneToObject = sonar.ping(
+    // Setting the sonar
     DigitalPin.P1,
     DigitalPin.P2,
     PingUnit.Centimeters
 )
-    // Setting the motors 
-    robotbit.StepperTurn(robotbit.Steppers.M1, robotbit.Turns.T1B4)
-    robotbit.StepperTurn(robotbit.Steppers.M2, robotbit.Turns.T1B4)
-    
-    basic.showNumber(distacneToObject)
+      basic.showNumber(distacneToObject)
+    //If distacneToObject is biiger than 10 makes the motros go forward 
+    if (distacneToObject > 10){
+        robotbit.MotorRunDual(robotbit.Motors.M1A, 150, robotbit.Motors.M2A, 150)
+        robotbit.StpCarMove(10, 48)
+    }
+    else {
+//If distacneToObject is smaller than 10 it stops the mootrs
+        robotbit.MotorStopAll()
+        // Moves backward for  10 cm
+        robotbit.StpCarMove(-10, 48)
+        // Turning 90 degreese 
+        robotbit.StepperTurn(robotbit.Steppers.M1, robotbit.Turns.T1B4)
+        robotbit.StepperTurn(robotbit.Steppers.M2, robotbit.Turns.T1B4)
+        // Setting the speed of the motors and seting the motors
+        robotbit.MotorRunDual(robotbit.Motors.M1A, 150, robotbit.Motors.M2A, 150)
+        robotbit.StpCarMove(10, 48)
+
+    }
+}
 })
-
-
